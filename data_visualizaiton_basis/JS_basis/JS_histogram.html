@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS_Histogram</title>
+    <!--我们这里学习如何用在HTML这里显示Histogram，我们得学习data visualization-->
+    <h4>hello world</h4>
+
+    <svg id="svg01" width=800 height=600>
+        <!--x,y是起点坐标，然后有width and height,这里画一个蓝色的rectangle，这是第一种方法-->
+        <!--
+            <rect x=20 y=20 width=100 height=300 fill="blue" />
+        -->
+
+        <!--添加文字-->
+        <text x="50" y="50" fill="red">I love SVG!</text>
+
+    </svg>
+
+    <script>
+        //取得屏幕宽
+        var w = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        //取得屏幕高
+        var h = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        //一般不要设置刚好屏幕大小
+        w = w*0.98;
+        h = h*0.98;
+        var svg = document.getElementById("svg01");
+        svg.setAttribute("width",w);
+        svg.setAttribute("height",h);
+        var rec = new Array();
+        var txt = new Array();
+        for (var i = 0; i < 10; i++) {
+            //创建一个rectangle，这是第二种方法
+            rec[i] = document.createElement("rect");  //用for loop生成多个rectangles
+
+            //创建文本
+            txt[i] = document.createElement("text");
+            //把这个rectangle放在svg的标签之下
+            svg.appendChild(rec[i]);
+
+            //把text 放在svg的标签之下
+            svg.appendChild(txt[i]);
+
+            var rec_h = Math.floor(Math.random()*255);
+            //要小心，这里的green那里要用单引号
+            //常量变变量，一对引号，一对加号
+            //把众多的rectangles全屏化
+            rec[i].outerHTML = "<rect x=" + (w/10) * i + " y="+(600-rec_h)+" width="+(w/10-5)+" height="+rec_h+" fill='rgb("+rec_h+",0,0)'/>"
+            txt[i].outerHTML = "<text x="+(i*w/10)+" y="+(580-rec_h)+" fill='blue'>"+rec_h+"</text>"
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>
