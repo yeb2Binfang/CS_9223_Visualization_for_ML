@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>text_Binary_tree</title>
+</head>
+
+<body>
+    <svg id="svg01" width=800 height=600>
+
+
+    </svg>
+    <script>
+        //取得屏幕宽
+        var w = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        //取得屏幕高
+        var h = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        //一般不要设置刚好屏幕大小
+        w = w * 0.98;
+        h = h * 0.98;
+
+        var x0 = w/2;
+        var y0 = h;
+
+        var L = 300;
+        var rate = 0.7;
+        var a = -Math.PI/2; //degree used to cos below
+        count =7;
+        var fontsize = 20;
+        var str ="My name is Bin!";
+        //var fontsize = 20;
+
+        var svg = document.getElementById("svg01");
+
+        svg.setAttribute("width", w);
+        svg.setAttribute("height", h);
+
+        function show(x0,y0,L,rate,a,count) {
+            var fontsize = count;
+            var L = str.length*fontsize*2.3;
+            var x1 = x0;
+            var y1 = y0;
+            var x2 = x1+L*rate*Math.cos(a);
+            var y2 = y1+L*rate*Math.sin(a);
+
+            //我们可以加入一些随机元素，Math.random()
+            //var L = L*(0.5 + Math.random()*0.5);
+            
+            //var L = str.length*fontsize;
+            var aL = a - Math.PI/4*(0.5 + Math.random()*0.5);
+            var aR = a + Math.PI/4*(0.5 + Math.random()*0.5);
+            
+
+            //创建直线
+            // var line1 = document.createElement("line");
+            // svg.appendChild(line1);
+            // line1.outerHTML = "<line x1="+x1+" y1=" + y1 + " x2=" + x2 + " y2=" + y2 + " stroke-width = "+count+" stroke='green'/>";
+
+            var txt = document.createElement("text");
+            svg.appendChild(txt);
+            txt.outerHTML = "<text x="+x1+" y="+y1+" transform='rotate("+a*180/Math.PI+","+x1+","+y1+")' fill='green' font-size="+(fontsize*3.6)+">"+str+"</text>";
+
+            //左子树右子树需要用递归
+            if(count>0){
+                show(x2,y2,L,rate,aL,count-1);
+                show(x2,y2,L,rate,aR,count-1);
+                if(count==1){
+                    var apple = document.createElement("circle");
+                    svg.appendChild(apple);
+                    apple.outerHTML = "<circle cx="+x2+" cy="+y2+" r="+5*Math.random()+" fill='red' />";
+                }
+            }
+        }
+        show(x0,y0,L,rate,a,count);
+        show(x0,y0,L,rate,a,count);
+        show(x0,y0,L,rate,a,count);
+        show(x0,y0,L,rate,a,count);
+        show(x0,y0,L,rate,a,count);
+        show(x0,y0,L,rate,a,count);
+        show(x0,y0,L,rate,a,count);
+        show(x0,y0,L,rate,a,count);
+        
+
+
+
+
+    </script>
+</body>
+
+</html>
