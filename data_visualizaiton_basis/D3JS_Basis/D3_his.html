@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3_practice</title>
+</head>
+
+<body>
+    <!--加载第三方JS库，也就是D3JS库-->
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script>
+        //取得屏幕宽
+        var w = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        //取得屏幕高
+        var h = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        //一般不要设置刚好屏幕大小
+        w = w * 0.98;
+        h = h * 0.98;
+        var dataset = new Array(10);
+        for (var i = 0; i < 10; i++) {
+            dataset[i] = 500 * Math.random();
+        }
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+        /* //绘制矩形
+        svg.append("rect")
+           .attr("x",0)
+           .attr("y",0)
+           .attr("width",100)
+           .attr("height",500);
+        */
+
+        //d3可以批量绑定，我们这里是绑定了dataset，所以说dataset有多少个，这里就会画多少个矩形
+        svg.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            //这里d表示的是dataset的数据，i表示的是下标，这里是transform x的坐标
+            .attr("x", function (d, i) {
+                return i * (w / dataset.length);
+            })
+            .attr("y", function (d) {
+                return h - d;
+            })
+            .attr("width", (w / dataset.length) - 10)
+            .attr("height", function (d) {
+                return d;
+            })
+            .attr("fill", function (d) {
+                return "rgb(0, 0, " + (d / 2) + ")";
+            });
+
+        svg.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .attr("x", function (d, i) {
+                return i * (w / dataset.length) + (w / dataset.length / 2) - 20;
+            })
+            .attr("y", function (d) {
+                return h - d - 5;
+            })      
+            .text(function (d) {
+                return Math.floor(d);
+            });
+            
+    </script>
+</body>
+
+</html>
