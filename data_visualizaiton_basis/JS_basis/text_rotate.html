@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>text_rotate</title>
+</head>
+<body>
+    <svg id="svg01" width=800 height=600>
+        <!--x,y是起点坐标，然后有width and height,这里画一个蓝色的rectangle，这是第一种方法-->
+        <!--
+            <rect x=20 y=20 width=100 height=300 fill="blue" />
+        -->
+
+        <!--添加文字-->
+        <text x="200" y="200" fill="red">Bin!</text>
+        <!--这个是没有指定围绕哪个点旋转的，所以就是围绕着（0,0）旋转-->
+        <text x="200" y="200" fill="green" transform="rotate(45)">Bin!</text>
+        <!--这个是有指定围绕哪个点旋转的，所以就是围绕着（200,200）旋转-->
+        <text x="200" y="200" font-size=50 fill="blue" transform="rotate(45,200,200)">Bin!</text>
+        <!--如果是直接用rotate，那么就每个字母都得旋转，上面的整体旋转，具体自己看效果-->
+        <text x="200" y="200" font-size=50 fill="magenta" rotate=90>Bin!</text>
+
+    </svg>
+
+    <script>
+        //取得屏幕宽
+        var w = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        //取得屏幕高
+        var h = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        //一般不要设置刚好屏幕大小
+        w = w*0.98;
+        h = h*0.98;
+        var svg = document.getElementById("svg01");
+        svg.setAttribute("width",w);
+        svg.setAttribute("height",h);
+        
+        
+
+    </script>
+</body>
+</html>
