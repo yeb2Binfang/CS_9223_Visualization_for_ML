@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>svg_line</title>
+</head>
+<body>
+    <svg id="svg01" width=800 height=600>
+        <!--画一条直线-->
+        <line x1="0" y1="0" x2="100" y2="100" stroke="black" />
+        <line x1="100" y1="100" x2="200" y2="100" stroke="black" />
+
+    </svg>
+    <script>
+        //取得屏幕宽
+        var w = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        //取得屏幕高
+        var h = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+        
+        //一般不要设置刚好屏幕大小
+        w = w*0.98;
+        h = h*0.98;
+        var svg = document.getElementById("svg01");
+        
+        svg.setAttribute("width",w);
+        svg.setAttribute("height",h);
+
+        //创造一条直线
+        var line1 = document.createElement("line");
+        svg.appendChild(line1);
+        line1.outerHTML="<line x1='0' y1="+h/2+" x2="+w+" y2="+h/2+" stroke='black' />";
+
+        //再创造一条
+        var line2 = document.createElement("line");
+        svg.appendChild(line2);
+        line2.outerHTML="<line x1="+w/2+" y1='0' x2="+w/2+" y2="+h+" stroke='black' />";
+    </script>
+</body>
+</html>
