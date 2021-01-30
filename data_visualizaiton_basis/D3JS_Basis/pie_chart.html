@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--加载第三方JS库，也就是D3JS库-->
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!--用svg来画三角形-->
+    <!--<svg height=800 width=1500>-->
+    <!--
+            The example below defines a path that starts at position 400,150 
+            with a line to position 150,650 then from there, a line to 650,650 
+            and finally closing the path back to 400,150:
+            Z means close
+            L means line
+        -->
+    <!--
+        <path d="M400 150 L150 650 L650 650 Z" fill="pink"/>
+        <circle cx=400 cy=150 r=3 fill="blue"></circle>
+        <circle cx=150 cy=650 r=3 fill="blue"></circle>
+        <circle cx=650 cy=650 r=3 fill="blue"></circle>
+
+        -->
+
+    <!-- </svg> -->
+    <!--用D3JS来画一些形状-->
+    <script>
+        //取得屏幕宽
+        var w = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        //取得屏幕高
+        var h = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        //一般不要设置刚好屏幕大小
+        w = w * 0.98;
+        h = h * 0.98;
+        //圆的起始角度和终点角度
+        //如果有多个，那么就可以绘制pie chart
+        var dataset = [{ startAngle: 0, endAngle: 1 },
+                       { startAngle: 1, endAngle: 2 },
+                       { startAngle: 2, endAngle: 3 },
+                       { startAngle: 3, endAngle: 4 },
+                       { startAngle: 4, endAngle: 5 },
+                       { startAngle: 5, endAngle: Math.PI * 2 }
+        ];
+        //内外两个圆弧
+        var arcPath = d3.svg.arc()
+            .innerRadius(100)
+            .outerRadius(300);
+
+        var d = "M400 150 L150 650 L650 650 Z";
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+        svg.selectAll("path")
+            .data(dataset)
+            .enter()
+            .append("path")
+            .attr("d", function(d,i){
+                return arcPath(d);
+            })
+            .attr("fill", "yellow")
+            .attr("stroke", "black")
+            .attr("transform", "translate(400 400)");
+
+    </script>
+
+
+</body>
+
+</html>
