@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pie chart</title>
+</head>
+
+<body>
+    <!--加载第三方JS库，也就是D3JS库-->
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+    <!--用D3JS来实现pie chart-->
+    <script>
+        //取得屏幕宽
+        var w = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        //取得屏幕高
+        var h = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        //一般不要设置刚好屏幕大小
+        w = w * 0.98;
+        h = h * 0.98;
+        //圆的起始角度和终点角度
+        //如果有多个，那么就可以绘制pie chart
+        var dataset = [
+            ["agriculture",90],
+            ["industry",200],
+            ["the third industry",400]
+        ];
+        //用来算pie chart 的起始角度和终点角度
+        var pie = d3.layout.pie()
+                    .value(function(d){
+                        return d[1];
+                    });
+        
+        var piedata = pie(dataset);
+        console.log(piedata);
+
+        //内外两个圆弧
+        var arcPath = d3.svg.arc()
+            .innerRadius(100)
+            .outerRadius(300);
+
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+        svg.selectAll("path")
+            .data(piedata)
+            .enter()
+            .append("path")
+            .attr("d", function(d){
+                console.log(arcPath(d));
+                return arcPath(d);
+            })
+            .attr("fill", "yellow")
+            .attr("stroke", "black")
+            .attr("transform", "translate("+w/2+" "+h/2+")")
+            .on("mouseover",function(d){
+                d3.select(this)
+                  .attr("fill","green");
+            })
+            .on("mouseout",function(d){
+                d3.select(this)
+                  .attr("fill","yellow");
+            });
+        
+        svg.selectAll("text")
+            .data(piedata)
+            .enter()
+            .append("text")
+            .attr("text-anchor","middle")
+            .attr("transform",function(d){
+                var x = arcPath.centroid(d)[0];
+                var y = arcPath.centroid(d)[1];
+                console.log(x);
+                return "translate("+(w/2+x)+","+(h/2+y)+")";
+            })
+            .text(function(d){
+                return d.value;
+            });
+
+    </script>
+
+
+</body>
+
+</html>
