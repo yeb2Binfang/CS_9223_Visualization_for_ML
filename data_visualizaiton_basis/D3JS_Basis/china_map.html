@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>china map</title>
+    <style>
+        .province{
+            stroke:black;
+            stroke-width:1;
+
+        }
+    </style>
+</head>
+<body>
+    <!--加载第三方JS库，也就是D3JS库-->
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script>
+        //取得屏幕宽
+        var w = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        //取得屏幕高
+        var h = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        //一般不要设置刚好屏幕大小
+        w = w * 0.98;
+        h = h * 0.98;
+
+        var svg = d3.select("body")
+                    .append("svg")
+                    .attr("width",w)
+                    .attr("height",h);
+        var projection = d3.geo.mercator()
+                           .center([105,40])
+                           .scale(800)
+                           .translate([w/2,h/2]);
+        var path = d3.geo.path()
+                     .projection(projection);
+        
+        d3.json("https://raw.githubusercontent.com/waylau/svg-china-map/master/china-map/china.geo.json",function(error,geo){
+            console.log(geo);
+
+            var province = svg.selectAll(".province")
+                              .data(geo.features)
+                              .enter()
+                              .append("path")
+                              .attr("class","province")
+                              .style("fill","red")
+                              .attr("d",path);
+
+        });
+
+        d3.xml("https://raw.githubusercontent.com/yeb2Binfang/CS_9223_Visualization_for_ML/main/data_visualizaiton_basis/D3JS_Basis/cn.svg",function(error,xmlDocument){
+            console.log(xmlDocument);
+
+            svg.html(function(d){
+                return d3.select(this).html() + xmlDocument.getElementsByTagName("g")[0].outerHTML;
+            });
+
+            d3.select("#template-button")
+              .attr("transform","translate(1000,500) scale(0.2)")
+              .attr("class","template-button");
+        });
+
+    </script>
+</body>
+</html>
