@@ -1,0 +1,14 @@
+{
+  "nodes":
+  [
+    {"name":"@","group":0},
+    {"name":"@","group":1},
+    {"name":"@","group":2}
+  ],
+  "links":
+  [
+    {"source":0,"targer":1,"value":1},
+    {"source":1,"targer":2,"value":1},
+    {"source":2,"targer":0,"value":1}
+  ]
+}
